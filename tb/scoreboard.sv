@@ -2,25 +2,25 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Module Name: scoreboard
 //
-// FULL REFERENCE MODEL - tracks golden register file + golden memory + PC,
+// FULL REFERENCE MODEL: tracks golden register file + golden memory + PC,
 // predicts expected results in program order, checks against real DUT
 // writes captured by output_monitor.
 //
-// KNOWN LIMITATIONS (documented on purpose, not hidden):
+// KNOWN LIMITATIONS: 
 //  1. PC/order tracking assumes straight-line execution. This holds for
-//     THIS program because JAL is the last real instruction generated --
+//     THIS program because JAL is the last real instruction generated
 //     if a jump/branch executed mid-program, subsequent golden predictions
 //     would desync from actual DUT execution order. A general-purpose
 //     version would need to track control flow, not just increment PC.
 //  2. STORE (SB/SH/SW) writes rd=0, so there is no register write to
-//     compare against -- output_monitor only observes register writes,
+//     compare against, output_monitor only observes register writes,
 //     not memory-bus writes. STORE updates the golden memory model (so
 //     later LOADs predict correctly) but is not itself checked. Checking
 //     STORE would need a separate memory-write monitor snooping
 //     mem_valid/mem_wstrb/mem_addr/mem_wdata on the DUT bus.
 //  3. Uninitialized registers are guaranteed to reset to 0: tb_top.sv now
 //     instantiates picorv32 with REGS_INIT_ZERO(1). (Previously this was
-//     left at PicoRV32's default of 0 -- meaning the register file did
+//     left at PicoRV32's default of 0, meaning the register file did
 //     NOT reset to zero -- while this model assumed it did. That gap is
 //     what caused loads/stores through never-written registers like x26,
 //     x29 to compute unpredictable addresses and read back stale
@@ -31,12 +31,12 @@ class scoreboard;
   mailbox inmon2scb;
   mailbox outmon2scb;
 
-  // Golden reference state
+  // golden reference state
   bit [31:0] golden_regs [0:31];
   bit [31:0] golden_mem  [0:1023];  // mirrors interface's memory array
   bit [31:0] golden_pc;             // tracks PROGADDR_RESET + 4*n
 
-  // Coverage counters
+  // coverage counters
   int addi_cnt = 0, lui_cnt = 0, auipc_cnt = 0;
   int add_cnt = 0, sub_cnt = 0, xor_r_cnt = 0, or_r_cnt = 0, and_r_cnt = 0;
   int xori_cnt = 0, ori_cnt = 0, andi_cnt = 0;
@@ -46,7 +46,7 @@ class scoreboard;
   int jal_cnt = 0;
   int total_cnt = 0;
 
-  // Correctness-checking counters
+  // correctness-checking counters
   int check_pass_cnt = 0;
   int check_fail_cnt = 0;
   int check_skipped_cnt = 0;  // only for truly unrecognized instructions now
@@ -97,7 +97,7 @@ class scoreboard;
   endtask
 
   //==========================================================================
-  // Golden memory model helpers -- mirror the DUT's byte/halfword/word
+  // golden memory model helpers, mirror the DUT's byte/halfword/word
   // addressing (word index = addr[11:2], byte offset = addr[1:0]).
   //==========================================================================
   function void golden_mem_write(input bit [31:0] addr, input bit [31:0] wdata, input string name);
@@ -147,7 +147,7 @@ class scoreboard;
   endfunction
 
   //==========================================================================
-  // Reference model: predict result for ALU/immediate/LUI ops that don't
+  // reference model: predict result for ALU/immediate/LUI ops that don't
   // need memory or PC (those are handled directly in build_expected).
   //==========================================================================
   function bit [31:0] predict_result(input transaction trans, output bit checkable);
@@ -185,7 +185,7 @@ class scoreboard;
     return result;
   endfunction
 
-  // Build the expected-value queue entry for one transaction, updating
+  // build the expected-value queue entry for one transaction, updating
   // golden_regs / golden_mem / golden_pc so later instructions predict
   // against correct evolved state.
   function void build_expected(input transaction trans);
@@ -220,7 +220,7 @@ class scoreboard;
         checkable = 1;
       end
       "JAL": begin
-        // Return address. NOTE: does not model the actual jump target --
+        // return address. NOTE: does not model the actual jump target,
         // see class-level comment on the straight-line-order limitation.
         predicted = golden_pc + 4;
         checkable = 1;
@@ -241,7 +241,7 @@ class scoreboard;
   endfunction
 
   //==========================================================================
-  // Runs CONCURRENTLY with output_monitor after reset release (forked in
+  // runs CONCURRENTLY with output_monitor after reset release (forked in
   // environment.sv): drain outmon2scb as real writes arrive, compare
   // against expected_q in program order.
   //==========================================================================
