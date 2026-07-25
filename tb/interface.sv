@@ -52,4 +52,5 @@ interface intf(input bit clk);
   // modport for testbench
   modport TB (clocking cb, output resetn, input clk);
 
+  
 endinterface
