@@ -1,12 +1,10 @@
 `timescale 1ns / 1ps
+// INPUT MONITOR - tracks what instructions were loaded
 
-//////////////////////////////////////////////////////////////////////////////////
-// INPUT MONITOR - Tracks what instructions were loaded
-//////////////////////////////////////////////////////////////////////////////////
 class input_monitor;
   virtual intf vif;
   mailbox driv2inmon;
-  mailbox inmon2scb;  // Send to scoreboard
+  mailbox inmon2scb;  // send to scoreboard
   
   int instr_count = 0;
   
@@ -21,12 +19,12 @@ class input_monitor;
     
     $display("\n[%0t] [INPUT MONITOR] Starting - Collecting loaded instructions", $time);
     
-    // Collect all instructions from driver
+    // collect all instructions from driver
 while (driv2inmon.num() > 0) begin
       if (driv2inmon.num() > 0) begin
         driv2inmon.get(trans);
         
-        // Forward to scoreboard for coverage tracking
+        // forward to scoreboard for coverage tracking
         inmon2scb.put(trans);
         
         $display("[%0t] [INPUT MON] Tracked: %s (instr #%0d)", 
@@ -34,7 +32,7 @@ while (driv2inmon.num() > 0) begin
         
         instr_count++;
       end else begin
-        #1;  // Wait for more data
+        #1;  // wait for more data
       end
     end
     
