@@ -69,7 +69,6 @@ class generator;
     trans = new(); trans.opcode = 7'b0110011;  trans.funct3 = 3'b000; trans.funct7 = 7'b0000000; trans.rd = 5; trans.rs1 = 1; trans.rs2 = 2; trans.encode_instruction(); trans.display("GENERATOR-ADD"); gen2driv.put(trans);
 
     // AND (x23 = x1 AND x2) -- guaranteed directed test; previously AND
-    // only appeared via random luck and could show 0 count / NOT COVERED
     trans = new(); trans.opcode = 7'b0110011;  trans.funct3 = 3'b111; trans.funct7 = 7'b0000000; trans.rd = 23; trans.rs1 = 1; trans.rs2 = 2; trans.encode_instruction(); trans.display("GENERATOR-AND"); gen2driv.put(trans);
 
     // XORI
@@ -88,8 +87,6 @@ class generator;
     trans = new(); trans.opcode = 7'b0010011;  trans.funct3 = 3'b101; trans.funct7 = 7'b0000000; trans.rd = 21; trans.rs1 = 5; trans.imm = 32'h01; trans.encode_instruction(); trans.display("GENERATOR-SRLI"); gen2driv.put(trans);
 
     // SW - rs1=x0 (always 0), imm targets the aligned data region directly.
-    // Previously used x1 (value 10, not 4-byte aligned) as base, which
-    // could trip a CATCH_MISALIGN trap and silently halt the CPU.
     trans = new(); trans.opcode = 7'b0100011;  trans.funct3 = 3'b010; trans.rd = 0; trans.rs1 = 0; trans.rs2 = 2; trans.imm = 32'd256; trans.encode_instruction(); trans.display("GENERATOR-SW"); gen2driv.put(trans);
 
     // SH - halfword-aligned data region address
@@ -98,19 +95,7 @@ class generator;
     // SB - byte address, no alignment restriction
     trans = new(); trans.opcode = 7'b0100011;  trans.funct3 = 3'b000; trans.rd = 0; trans.rs1 = 0; trans.rs2 = 2; trans.imm = 32'd264; trans.encode_instruction(); trans.display("GENERATOR-SB"); gen2driv.put(trans);
 
-    // JAL - added DIRECTLY (not via randomize()). XSim's constraint solver
-    // hit a fatal crash when JAL's immediate was included in the
-    // randomizable constraint set (bit-slice + inside{} range constraint
-    // on a wide variable triggered solver instability). Sidestepped by
-    // setting fields explicitly here, same pattern as LUI/AUIPC above.
-    //
-    // imm=4: JAL is the LAST directed instruction the driver loads, so PC+4
-    // is exactly where the driver appends the halt loop (JAL x0,0). This is
-    // a deliberate, in-range forward jump that lands ON the halt loop.
-    // A larger offset (e.g. 64) overshoots the halt loop into memory that
-    // was never programmed (reads back as 0x00000000, an illegal RV32
-    // encoding) and traps the CPU on an illegal instruction instead of
-    // parking it in the intended infinite loop.
+    // JAL - added DIRECTLY (not via randomize())
     trans = new();
     trans.opcode = 7'b1101111;
     trans.rd = 22;
