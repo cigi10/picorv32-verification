@@ -3,7 +3,7 @@
 
 class output_monitor;
   virtual intf vif;
-  mailbox outmon2scb;  // Send results to scoreboard
+  mailbox outmon2scb;  // send results to scoreboard
   
   int reg_write_count = 0;
   
@@ -17,17 +17,17 @@ class output_monitor;
     
     $display("\n[%0t] [OUTPUT MONITOR] Starting - Watching CPU register writes", $time);
     
-    // Wait for CPU to start executing
+    // wait for CPU to start executing
     @(posedge vif.resetn);
     $display("[%0t] [OUTPUT MON] CPU reset released, monitoring started", $time);
     
-    // Monitor register writes for a reasonable time
+    // monitor register writes for a reasonable time
     fork
       begin
-        repeat(5000) begin  // Monitor for 5000 clock cycles
+        repeat(5000) begin  // monitor for 5000 clock cycles
           @(posedge vif.clk);
           
-          // Check if CPU wrote to a register
+          // check if CPU wrote to a register
           if (vif.cpuregs_write && vif.latched_rd != 0) begin
             trans = new();
             trans.expected_rd = vif.latched_rd;
@@ -36,7 +36,7 @@ class output_monitor;
             $display("[%0t] [OUTPUT MON] Reg Write: x%0d <= 0x%08h", 
                      $time, trans.expected_rd, trans.expected_result);
             
-            // Send to scoreboard for checking
+            // send to scoreboard for checking
             outmon2scb.put(trans);
             reg_write_count++;
           end
@@ -44,7 +44,6 @@ class output_monitor;
       end
     join_none
     
-    // Let it run for a while
     #4000;
     
     $display("[%0t] [OUTPUT MONITOR] Finished - Captured %0d register writes\n", 
