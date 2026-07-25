@@ -5,26 +5,6 @@
 // FULL REFERENCE MODEL: tracks golden register file + golden memory + PC,
 // predicts expected results in program order, checks against real DUT
 // writes captured by output_monitor.
-//
-// KNOWN LIMITATIONS: 
-//  1. PC/order tracking assumes straight-line execution. This holds for
-//     THIS program because JAL is the last real instruction generated
-//     if a jump/branch executed mid-program, subsequent golden predictions
-//     would desync from actual DUT execution order. A general-purpose
-//     version would need to track control flow, not just increment PC.
-//  2. STORE (SB/SH/SW) writes rd=0, so there is no register write to
-//     compare against, output_monitor only observes register writes,
-//     not memory-bus writes. STORE updates the golden memory model (so
-//     later LOADs predict correctly) but is not itself checked. Checking
-//     STORE would need a separate memory-write monitor snooping
-//     mem_valid/mem_wstrb/mem_addr/mem_wdata on the DUT bus.
-//  3. Uninitialized registers are guaranteed to reset to 0: tb_top.sv now
-//     instantiates picorv32 with REGS_INIT_ZERO(1). (Previously this was
-//     left at PicoRV32's default of 0, meaning the register file did
-//     NOT reset to zero -- while this model assumed it did. That gap is
-//     what caused loads/stores through never-written registers like x26,
-//     x29 to compute unpredictable addresses and read back stale
-//     instruction words, eventually tripping a misalignment trap.)
 //////////////////////////////////////////////////////////////////////////////////
 
 class scoreboard;
@@ -152,14 +132,7 @@ class scoreboard;
   //==========================================================================
   function bit [31:0] predict_result(input transaction trans, output bit checkable);
     bit [31:0] result;
-    bit signed [31:0] simm;  // sign-extended imm[11:0] -- built explicitly into a
-                              // full 32-bit value so it doesn't get silently
-                              // reinterpreted as unsigned when combined with
-                              // golden_regs[] below (a real bug: $signed(imm[11:0])
-                              // mixed directly with an unsigned operand loses its
-                              // signedness under SystemVerilog's usual arithmetic
-                              // conversion rules -- this is why ADDI with a
-                              // negative immediate was mispredicted as unsigned).
+    bit signed [31:0] simm;  
     checkable = 1;
     simm = {{20{trans.imm[11]}}, trans.imm[11:0]};
 
