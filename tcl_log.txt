@@ -1,0 +1,436 @@
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-25911] Executing simulation for 'XSim' simulator
+INFO: [Project 1-5737] Running on host fedora (64) - Fedora Linux 43 (KDE Plasma Desktop Edition)
+INFO: [Vivado 12-28535] Process started - Sat Jul 25 19:08:36 2026
+
+INFO: [Vivado 12-12493] Simulation top is 'tb_top'
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/chipra/functional_verif_core/functional_verif_core.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from '/tools/Xilinx/2025.2/2025.2/tps/boost_1_72_0'
+INFO: [SIM-utils-54] Inspecting design source files for 'tb_top' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/chipra/functional_verif_core/functional_verif_core.sim/sim_1/behav/xsim'
+xvlog --incr --relax -L uvm -prj tb_top_vlog.prj
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chipra/functional_verif_core/functional_verif_core.srcs/sim_1/new/interface.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chipra/functional_verif_core/functional_verif_core.srcs/sim_1/new/transaction.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chipra/functional_verif_core/functional_verif_core.srcs/sim_1/new/driver.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chipra/functional_verif_core/functional_verif_core.srcs/sim_1/new/generator.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chipra/functional_verif_core/functional_verif_core.srcs/sim_1/new/input_monitor.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chipra/functional_verif_core/functional_verif_core.srcs/sim_1/new/output_monitor.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chipra/functional_verif_core/functional_verif_core.srcs/sim_1/new/scoreboard.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chipra/functional_verif_core/functional_verif_core.srcs/sim_1/new/environment.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chipra/functional_verif_core/functional_verif_core.srcs/sim_1/new/tb_top.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_top
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '2' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/chipra/functional_verif_core/functional_verif_core.sim/sim_1/behav/xsim'
+xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L uvm -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_top_behav xil_defaultlib.tb_top xil_defaultlib.glbl -log elaborate.log
+Vivado Simulator v2025.2
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: /tools/Xilinx/2025.2/2025.2/Vivado/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L uvm -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_top_behav xil_defaultlib.tb_top xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package xil_defaultlib.$unit_interface_sv_895889413
+Compiling package std.std
+Compiling module xil_defaultlib.intf_default
+Compiling module xil_defaultlib.picorv32(ENABLE_COUNTERS=1'b0,EN...
+Compiling module xil_defaultlib.tb_top
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot tb_top_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '3' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/chipra/functional_verif_core/functional_verif_core.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "tb_top_behav -key {Behavioral:sim_1:Functional:tb_top} -tclbatch {tb_top.tcl} -view {/home/chipra/functional_verif_core/tb_top_behav.wcfg} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Time resolution is 1 ps
+open_wave_config /home/chipra/functional_verif_core/tb_top_behav.wcfg
+source tb_top.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# log_wave -r /
+# run 30us
+
+
+╔════════════════════════════════════════════════════════╗
+║   RISC-V PICORV32 VERIFICATION ENVIRONMENT STARTING    ║
+╚════════════════════════════════════════════════════════╝
+
+
+>>> PHASE 1: Generating Instructions...
+
+[20000] [GENERATOR] Starting generation of 50 instructions
+[GENERATOR] Phase 1: Initializing registers x1-x10
+[20000] GENERATOR-INIT: ADDI | rd=x1 rs1=x0 rs2=x0 imm=0xa | instr=0x00a00093
+[20000] GENERATOR-INIT: ADDI | rd=x2 rs1=x0 rs2=x0 imm=0x14 | instr=0x01400113
+[20000] GENERATOR-INIT: ADDI | rd=x3 rs1=x0 rs2=x0 imm=0x1e | instr=0x01e00193
+[20000] GENERATOR-INIT: ADDI | rd=x4 rs1=x0 rs2=x0 imm=0x28 | instr=0x02800213
+[20000] GENERATOR-INIT: ADDI | rd=x5 rs1=x0 rs2=x0 imm=0x32 | instr=0x03200293
+[20000] GENERATOR-INIT: ADDI | rd=x6 rs1=x0 rs2=x0 imm=0x3c | instr=0x03c00313
+[20000] GENERATOR-INIT: ADDI | rd=x7 rs1=x0 rs2=x0 imm=0x46 | instr=0x04600393
+[20000] GENERATOR-INIT: ADDI | rd=x8 rs1=x0 rs2=x0 imm=0x50 | instr=0x05000413
+[20000] GENERATOR-INIT: ADDI | rd=x9 rs1=x0 rs2=x0 imm=0x5a | instr=0x05a00493
+[20000] GENERATOR-INIT: ADDI | rd=x10 rs1=x0 rs2=x0 imm=0x64 | instr=0x06400513
+[GENERATOR] Phase 2: Generating random instructions
+[20000] GENERATOR-RAND: SUB | rd=x7 rs1=x15 rs2=x6 imm=0xc20 | instr=0x406783b3
+[20000] GENERATOR-RAND: LB | rd=x14 rs1=x21 rs2=x14 imm=0x13e | instr=0x13ea8703
+[20000] GENERATOR-RAND: LBU | rd=x8 rs1=x29 rs2=x18 imm=0x188 | instr=0x188ec403
+[20000] GENERATOR-RAND: SUB | rd=x5 rs1=x6 rs2=x28 imm=0xf60 | instr=0x41c302b3
+[20000] GENERATOR-RAND: XOR | rd=x16 rs1=x13 rs2=x19 imm=0x20 | instr=0x0136c833
+[20000] GENERATOR-RAND: ADD | rd=x9 rs1=x28 rs2=x20 imm=0x599 | instr=0x014e04b3
+[20000] GENERATOR-RAND: OR | rd=x22 rs1=x27 rs2=x15 imm=0xf9f | instr=0x00fdeb33
+[20000] GENERATOR-RAND: OR | rd=x11 rs1=x29 rs2=x11 imm=0x9d3 | instr=0x00bee5b3
+[20000] GENERATOR-RAND: ADD | rd=x27 rs1=x10 rs2=x5 imm=0x2d7 | instr=0x00550db3
+[20000] GENERATOR-RAND: ADD | rd=x16 rs1=x13 rs2=x28 imm=0xc6a | instr=0x01c68833
+[20000] GENERATOR-RAND: AND | rd=x4 rs1=x15 rs2=x18 imm=0xd31 | instr=0x0127f233
+[20000] GENERATOR-RAND: AUIPC | rd=x22 rs1=x25 rs2=x9 imm=0xfea | instr=0x00000b17
+[20000] GENERATOR-RAND: SUB | rd=x5 rs1=x2 rs2=x21 imm=0x8eb | instr=0x415102b3
+[20000] GENERATOR-RAND: SLLI | rd=x2 rs1=x0 rs2=x20 imm=0x1a | instr=0x01a01113
+[20000] GENERATOR-RAND: AND | rd=x27 rs1=x11 rs2=x16 imm=0x77c | instr=0x0105fdb3
+[20000] GENERATOR-RAND: LB | rd=x30 rs1=x28 rs2=x30 imm=0x15d | instr=0x15de0f03
+[20000] GENERATOR-RAND: LB | rd=x26 rs1=x0 rs2=x0 imm=0x1e9 | instr=0x1e900d03
+[20000] GENERATOR-RAND: ADD | rd=x2 rs1=x16 rs2=x2 imm=0xf7f | instr=0x00280133
+[20000] GENERATOR-RAND: SLLI | rd=x8 rs1=x9 rs2=x28 imm=0x10 | instr=0x01049413
+[20000] GENERATOR-RAND: SLLI | rd=x8 rs1=x28 rs2=x20 imm=0xc | instr=0x00ce1413
+[20000] GENERATOR-RAND: SLLI | rd=x25 rs1=x16 rs2=x3 imm=0x10 | instr=0x01081c93
+[20000] GENERATOR-RAND: SB | rd=x26 rs1=x22 rs2=x18 imm=0x1b0 | instr=0x1b2b0823
+[20000] GENERATOR-RAND: SLLI | rd=x23 rs1=x10 rs2=x20 imm=0xf | instr=0x00f51b93
+[20000] GENERATOR-RAND: LW | rd=x14 rs1=x7 rs2=x26 imm=0x1f0 | instr=0x1f03a703
+[20000] GENERATOR-RAND: ADD | rd=x13 rs1=x1 rs2=x22 imm=0xb85 | instr=0x016086b3
+[20000] GENERATOR-RAND: SUB | rd=x19 rs1=x23 rs2=x5 imm=0x787 | instr=0x405b89b3
+[20000] GENERATOR-RAND: SLLI | rd=x4 rs1=x30 rs2=x1 imm=0xa | instr=0x00af1213
+[20000] GENERATOR-RAND: LB | rd=x10 rs1=x21 rs2=x29 imm=0x172 | instr=0x172a8503
+[20000] GENERATOR-RAND: SLLI | rd=x9 rs1=x26 rs2=x9 imm=0xd | instr=0x00dd1493
+[20000] GENERATOR-RAND: SUB | rd=x15 rs1=x21 rs2=x27 imm=0xaec | instr=0x41ba87b3
+[GENERATOR] Phase 3: Generating directed tests
+[20000] GENERATOR-LUI: LUI | rd=x15 rs1=x0 rs2=x0 imm=0xabcde000 | instr=0xabcde7b7
+[20000] GENERATOR-AUIPC: AUIPC | rd=x16 rs1=x0 rs2=x0 imm=0x12345000 | instr=0x12345817
+[20000] GENERATOR-ADD: ADD | rd=x5 rs1=x1 rs2=x2 imm=0x0 | instr=0x002082b3
+[20000] GENERATOR-AND: AND | rd=x23 rs1=x1 rs2=x2 imm=0x0 | instr=0x0020fbb3
+[20000] GENERATOR-XORI: XORI | rd=x17 rs1=x1 rs2=x0 imm=0xff | instr=0x0ff0c893
+[20000] GENERATOR-ORI: ORI | rd=x18 rs1=x2 rs2=x0 imm=0xf | instr=0x00f16913
+[20000] GENERATOR-ANDI: ANDI | rd=x19 rs1=x3 rs2=x0 imm=0xf0 | instr=0x0f01f993
+[20000] GENERATOR-SLLI: SLLI | rd=x20 rs1=x4 rs2=x0 imm=0x2 | instr=0x00221a13
+[20000] GENERATOR-SRLI: SRLI | rd=x21 rs1=x5 rs2=x0 imm=0x1 | instr=0x0012da93
+[20000] GENERATOR-SW: SW | rd=x0 rs1=x0 rs2=x2 imm=0x100 | instr=0x10202023
+[20000] GENERATOR-SH: SH | rd=x0 rs1=x0 rs2=x2 imm=0x104 | instr=0x10201223
+[20000] GENERATOR-SB: SB | rd=x0 rs1=x0 rs2=x2 imm=0x108 | instr=0x10200423
+[20000] GENERATOR-JAL: JAL | rd=x22 rs1=x0 rs2=x0 imm=0x4 | instr=0x00400b6f
+[20000] [GENERATOR] Finished - Total 50 instructions generated
+
+[ENV] Generator finished, mailbox has 53 transactions
+
+>>> PHASE 2: Loading Instructions into Memory...
+
+[120000] [DRIVER] Starting - Loading instructions into memory
+[120000] [DRIVER] Mailbox has 53 items
+[120000] [DRIVER] Loaded instr[0] @ 0x00000000: 0x00a00093 (ADDI)
+[120000] [DRIVER] Loaded instr[1] @ 0x00000004: 0x01400113 (ADDI)
+[120000] [DRIVER] Loaded instr[2] @ 0x00000008: 0x01e00193 (ADDI)
+[120000] [DRIVER] Loaded instr[3] @ 0x0000000c: 0x02800213 (ADDI)
+[120000] [DRIVER] Loaded instr[4] @ 0x00000010: 0x03200293 (ADDI)
+[120000] [DRIVER] Loaded instr[5] @ 0x00000014: 0x03c00313 (ADDI)
+[120000] [DRIVER] Loaded instr[6] @ 0x00000018: 0x04600393 (ADDI)
+[120000] [DRIVER] Loaded instr[7] @ 0x0000001c: 0x05000413 (ADDI)
+[120000] [DRIVER] Loaded instr[8] @ 0x00000020: 0x05a00493 (ADDI)
+[120000] [DRIVER] Loaded instr[9] @ 0x00000024: 0x06400513 (ADDI)
+[120000] [DRIVER] Loaded instr[10] @ 0x00000028: 0x406783b3 (SUB)
+[120000] [DRIVER] Loaded instr[11] @ 0x0000002c: 0x13ea8703 (LB)
+[120000] [DRIVER] Loaded instr[12] @ 0x00000030: 0x188ec403 (LBU)
+[120000] [DRIVER] Loaded instr[13] @ 0x00000034: 0x41c302b3 (SUB)
+[120000] [DRIVER] Loaded instr[14] @ 0x00000038: 0x0136c833 (XOR)
+[120000] [DRIVER] Loaded instr[15] @ 0x0000003c: 0x014e04b3 (ADD)
+[120000] [DRIVER] Loaded instr[16] @ 0x00000040: 0x00fdeb33 (OR)
+[120000] [DRIVER] Loaded instr[17] @ 0x00000044: 0x00bee5b3 (OR)
+[120000] [DRIVER] Loaded instr[18] @ 0x00000048: 0x00550db3 (ADD)
+[120000] [DRIVER] Loaded instr[19] @ 0x0000004c: 0x01c68833 (ADD)
+[120000] [DRIVER] Loaded instr[20] @ 0x00000050: 0x0127f233 (AND)
+[120000] [DRIVER] Loaded instr[21] @ 0x00000054: 0x00000b17 (AUIPC)
+[120000] [DRIVER] Loaded instr[22] @ 0x00000058: 0x415102b3 (SUB)
+[120000] [DRIVER] Loaded instr[23] @ 0x0000005c: 0x01a01113 (SLLI)
+[120000] [DRIVER] Loaded instr[24] @ 0x00000060: 0x0105fdb3 (AND)
+[120000] [DRIVER] Loaded instr[25] @ 0x00000064: 0x15de0f03 (LB)
+[120000] [DRIVER] Loaded instr[26] @ 0x00000068: 0x1e900d03 (LB)
+[120000] [DRIVER] Loaded instr[27] @ 0x0000006c: 0x00280133 (ADD)
+[120000] [DRIVER] Loaded instr[28] @ 0x00000070: 0x01049413 (SLLI)
+[120000] [DRIVER] Loaded instr[29] @ 0x00000074: 0x00ce1413 (SLLI)
+[120000] [DRIVER] Loaded instr[30] @ 0x00000078: 0x01081c93 (SLLI)
+[120000] [DRIVER] Loaded instr[31] @ 0x0000007c: 0x1b2b0823 (SB)
+[120000] [DRIVER] Loaded instr[32] @ 0x00000080: 0x00f51b93 (SLLI)
+[120000] [DRIVER] Loaded instr[33] @ 0x00000084: 0x1f03a703 (LW)
+[120000] [DRIVER] Loaded instr[34] @ 0x00000088: 0x016086b3 (ADD)
+[120000] [DRIVER] Loaded instr[35] @ 0x0000008c: 0x405b89b3 (SUB)
+[120000] [DRIVER] Loaded instr[36] @ 0x00000090: 0x00af1213 (SLLI)
+[120000] [DRIVER] Loaded instr[37] @ 0x00000094: 0x172a8503 (LB)
+[120000] [DRIVER] Loaded instr[38] @ 0x00000098: 0x00dd1493 (SLLI)
+[120000] [DRIVER] Loaded instr[39] @ 0x0000009c: 0x41ba87b3 (SUB)
+[120000] [DRIVER] Loaded instr[40] @ 0x000000a0: 0xabcde7b7 (LUI)
+[120000] [DRIVER] Loaded instr[41] @ 0x000000a4: 0x12345817 (AUIPC)
+[120000] [DRIVER] Loaded instr[42] @ 0x000000a8: 0x002082b3 (ADD)
+[120000] [DRIVER] Loaded instr[43] @ 0x000000ac: 0x0020fbb3 (AND)
+[120000] [DRIVER] Loaded instr[44] @ 0x000000b0: 0x0ff0c893 (XORI)
+[120000] [DRIVER] Loaded instr[45] @ 0x000000b4: 0x00f16913 (ORI)
+[120000] [DRIVER] Loaded instr[46] @ 0x000000b8: 0x0f01f993 (ANDI)
+[120000] [DRIVER] Loaded instr[47] @ 0x000000bc: 0x00221a13 (SLLI)
+[120000] [DRIVER] Loaded instr[48] @ 0x000000c0: 0x0012da93 (SRLI)
+[120000] [DRIVER] Loaded instr[49] @ 0x000000c4: 0x10202023 (SW)
+[120000] [DRIVER] Loaded instr[50] @ 0x000000c8: 0x10201223 (SH)
+[120000] [DRIVER] Loaded instr[51] @ 0x000000cc: 0x10200423 (SB)
+[120000] [DRIVER] Loaded instr[52] @ 0x000000d0: 0x00400b6f (JAL)
+[120000] [DRIVER] Loaded HALT @ instr[53]
+[120000] [DRIVER] Finished - Loaded 53 instructions into memory
+
+
+>>> PHASE 3: Input Monitor Tracking...
+
+[170000] [INPUT MONITOR] Starting - Collecting loaded instructions
+[170000] [INPUT MON] Tracked: ADDI (instr #0)
+[170000] [INPUT MON] Tracked: ADDI (instr #1)
+[170000] [INPUT MON] Tracked: ADDI (instr #2)
+[170000] [INPUT MON] Tracked: ADDI (instr #3)
+[170000] [INPUT MON] Tracked: ADDI (instr #4)
+[170000] [INPUT MON] Tracked: ADDI (instr #5)
+[170000] [INPUT MON] Tracked: ADDI (instr #6)
+[170000] [INPUT MON] Tracked: ADDI (instr #7)
+[170000] [INPUT MON] Tracked: ADDI (instr #8)
+[170000] [INPUT MON] Tracked: ADDI (instr #9)
+[170000] [INPUT MON] Tracked: SUB (instr #10)
+[170000] [INPUT MON] Tracked: LB (instr #11)
+[170000] [INPUT MON] Tracked: LBU (instr #12)
+[170000] [INPUT MON] Tracked: SUB (instr #13)
+[170000] [INPUT MON] Tracked: XOR (instr #14)
+[170000] [INPUT MON] Tracked: ADD (instr #15)
+[170000] [INPUT MON] Tracked: OR (instr #16)
+[170000] [INPUT MON] Tracked: OR (instr #17)
+[170000] [INPUT MON] Tracked: ADD (instr #18)
+[170000] [INPUT MON] Tracked: ADD (instr #19)
+[170000] [INPUT MON] Tracked: AND (instr #20)
+[170000] [INPUT MON] Tracked: AUIPC (instr #21)
+[170000] [INPUT MON] Tracked: SUB (instr #22)
+[170000] [INPUT MON] Tracked: SLLI (instr #23)
+[170000] [INPUT MON] Tracked: AND (instr #24)
+[170000] [INPUT MON] Tracked: LB (instr #25)
+[170000] [INPUT MON] Tracked: LB (instr #26)
+[170000] [INPUT MON] Tracked: ADD (instr #27)
+[170000] [INPUT MON] Tracked: SLLI (instr #28)
+[170000] [INPUT MON] Tracked: SLLI (instr #29)
+[170000] [INPUT MON] Tracked: SLLI (instr #30)
+[170000] [INPUT MON] Tracked: SB (instr #31)
+[170000] [INPUT MON] Tracked: SLLI (instr #32)
+[170000] [INPUT MON] Tracked: LW (instr #33)
+[170000] [INPUT MON] Tracked: ADD (instr #34)
+[170000] [INPUT MON] Tracked: SUB (instr #35)
+[170000] [INPUT MON] Tracked: SLLI (instr #36)
+[170000] [INPUT MON] Tracked: LB (instr #37)
+[170000] [INPUT MON] Tracked: SLLI (instr #38)
+[170000] [INPUT MON] Tracked: SUB (instr #39)
+[170000] [INPUT MON] Tracked: LUI (instr #40)
+[170000] [INPUT MON] Tracked: AUIPC (instr #41)
+[170000] [INPUT MON] Tracked: ADD (instr #42)
+[170000] [INPUT MON] Tracked: AND (instr #43)
+[170000] [INPUT MON] Tracked: XORI (instr #44)
+[170000] [INPUT MON] Tracked: ORI (instr #45)
+[170000] [INPUT MON] Tracked: ANDI (instr #46)
+[170000] [INPUT MON] Tracked: SLLI (instr #47)
+[170000] [INPUT MON] Tracked: SRLI (instr #48)
+[170000] [INPUT MON] Tracked: SW (instr #49)
+[170000] [INPUT MON] Tracked: SH (instr #50)
+[170000] [INPUT MON] Tracked: SB (instr #51)
+[170000] [INPUT MON] Tracked: JAL (instr #52)
+[170000] [INPUT MONITOR] Finished - Tracked 53 instructions
+
+
+>>> PHASE 4: Scoreboard Analysis (coverage + reference model build)...
+
+[220000] [SCOREBOARD] Starting
+[SCOREBOARD] Phase 1: Collecting instructions for coverage + building reference model
+[SCOREBOARD] Collected 53 instructions total
+[SCOREBOARD] 49 expected results queued for correctness checking
+
+
+╔═══════════════════════════════════════════════════════════╗
+║          INSTRUCTION COVERAGE REPORT                     ║
+╠═══════════════════════════════════════════════════════════╣
+║ Instruction     │  Count  │  Status                      ║
+╟─────────────────┼─────────┼──────────────────────────────╢
+║ ADDI            │    10   │   COVERED          ║
+║ XORI            │     1   │   COVERED          ║
+║ ORI             │     1   │   COVERED          ║
+║ ANDI            │     1   │   COVERED          ║
+║ SLLI            │     8   │   COVERED          ║
+║ SRLI            │     1   │   COVERED          ║
+║ LUI             │     1   │   COVERED          ║
+║ AUIPC           │     2   │   COVERED          ║
+║ ADD             │     6   │   COVERED          ║
+║ SUB             │     5   │   COVERED          ║
+║ XOR             │     1   │   COVERED          ║
+║ OR              │     2   │   COVERED          ║
+║ AND             │     3   │   COVERED          ║
+║ LOAD (LW/LH/LB) │     5   │   COVERED          ║
+║ STORE (SW/SH/SB)│     4   │   COVERED          ║
+║ JAL             │     1   │   COVERED          ║
+╟─────────────────┼─────────┼──────────────────────────────╢
+║ TOTAL INSTR     │    53   │                              ║
+║ COVERAGE        │ 16/16   │  100.0% instruction types   ║
+╟─────────────────┴─────────┴──────────────────────────────╢
+║   ALL 16 INSTRUCTION TYPE CATEGORIES EXERCISED           ║
+╚═══════════════════════════════════════════════════════════╝
+
+
+
+[SCOREBOARD] Coverage analysis complete!
+[SCOREBOARD] Finished
+
+
+>>> PHASE 5: Output Monitor + Correctness Checker running concurrently...
+
+[ENV] All verification components initialized!
+
+
+[270000] [OUTPUT MONITOR] Starting - Watching CPU register writes
+[270000] [SCOREBOARD-CHECK] Correctness checker started, 49 entries queued
+
+╔════════════════════════════════════════════════════════╗
+║  *** RESET RELEASED - CPU STARTING EXECUTION! ***      ║
+╚════════════════════════════════════════════════════════╝
+
+[370000] [OUTPUT MON] CPU reset released, monitoring started
+[435000] [OUTPUT MON] Reg Write: x1 <= 0x0000000a
+[435000] [SCOREBOARD-CHECK] PASS (ADDI): x1 = 0x0000000a
+[465000] [OUTPUT MON] Reg Write: x2 <= 0x00000014
+[465000] [SCOREBOARD-CHECK] PASS (ADDI): x2 = 0x00000014
+[495000] [OUTPUT MON] Reg Write: x3 <= 0x0000001e
+[495000] [SCOREBOARD-CHECK] PASS (ADDI): x3 = 0x0000001e
+[525000] [OUTPUT MON] Reg Write: x4 <= 0x00000028
+[525000] [SCOREBOARD-CHECK] PASS (ADDI): x4 = 0x00000028
+[555000] [OUTPUT MON] Reg Write: x5 <= 0x00000032
+[555000] [SCOREBOARD-CHECK] PASS (ADDI): x5 = 0x00000032
+[585000] [OUTPUT MON] Reg Write: x6 <= 0x0000003c
+[585000] [SCOREBOARD-CHECK] PASS (ADDI): x6 = 0x0000003c
+[615000] [OUTPUT MON] Reg Write: x7 <= 0x00000046
+[615000] [SCOREBOARD-CHECK] PASS (ADDI): x7 = 0x00000046
+[645000] [OUTPUT MON] Reg Write: x8 <= 0x00000050
+[645000] [SCOREBOARD-CHECK] PASS (ADDI): x8 = 0x00000050
+[675000] [OUTPUT MON] Reg Write: x9 <= 0x0000005a
+[675000] [SCOREBOARD-CHECK] PASS (ADDI): x9 = 0x0000005a
+[705000] [OUTPUT MON] Reg Write: x10 <= 0x00000064
+[705000] [SCOREBOARD-CHECK] PASS (ADDI): x10 = 0x00000064
+[745000] [OUTPUT MON] Reg Write: x7 <= 0xffffffc4
+[745000] [SCOREBOARD-CHECK] PASS (SUB): x7 = 0xffffffc4
+[795000] [OUTPUT MON] Reg Write: x14 <= 0x00000000
+[795000] [SCOREBOARD-CHECK] PASS (LB): x14 = 0x00000000
+[845000] [OUTPUT MON] Reg Write: x8 <= 0x00000000
+[845000] [SCOREBOARD-CHECK] PASS (LBU): x8 = 0x00000000
+[885000] [OUTPUT MON] Reg Write: x5 <= 0x0000003c
+[885000] [SCOREBOARD-CHECK] PASS (SUB): x5 = 0x0000003c
+[925000] [OUTPUT MON] Reg Write: x16 <= 0x00000000
+[925000] [SCOREBOARD-CHECK] PASS (XOR): x16 = 0x00000000
+[965000] [OUTPUT MON] Reg Write: x9 <= 0x00000000
+[965000] [SCOREBOARD-CHECK] PASS (ADD): x9 = 0x00000000
+[1005000] [OUTPUT MON] Reg Write: x22 <= 0x00000000
+[1005000] [SCOREBOARD-CHECK] PASS (OR): x22 = 0x00000000
+[1045000] [OUTPUT MON] Reg Write: x11 <= 0x00000000
+[1045000] [SCOREBOARD-CHECK] PASS (OR): x11 = 0x00000000
+[1085000] [OUTPUT MON] Reg Write: x27 <= 0x000000a0
+[1085000] [SCOREBOARD-CHECK] PASS (ADD): x27 = 0x000000a0
+[1125000] [OUTPUT MON] Reg Write: x16 <= 0x00000000
+[1125000] [SCOREBOARD-CHECK] PASS (ADD): x16 = 0x00000000
+[1165000] [OUTPUT MON] Reg Write: x4 <= 0x00000000
+[1165000] [SCOREBOARD-CHECK] PASS (AND): x4 = 0x00000000
+[1195000] [OUTPUT MON] Reg Write: x22 <= 0x00000054
+[1195000] [SCOREBOARD-CHECK] PASS (AUIPC): x22 = 0x00000054
+[1235000] [OUTPUT MON] Reg Write: x5 <= 0x00000014
+[1235000] [SCOREBOARD-CHECK] PASS (SUB): x5 = 0x00000014
+[1345000] [OUTPUT MON] Reg Write: x2 <= 0x00000000
+[1345000] [SCOREBOARD-CHECK] PASS (SLLI): x2 = 0x00000000
+[1395000] [OUTPUT MON] Reg Write: x27 <= 0x00000000
+[1395000] [SCOREBOARD-CHECK] PASS (AND): x27 = 0x00000000
+[1445000] [OUTPUT MON] Reg Write: x30 <= 0x00000000
+[1445000] [SCOREBOARD-CHECK] PASS (LB): x30 = 0x00000000
+[1495000] [OUTPUT MON] Reg Write: x26 <= 0x00000000
+[1495000] [SCOREBOARD-CHECK] PASS (LB): x26 = 0x00000000
+[1535000] [OUTPUT MON] Reg Write: x2 <= 0x00000000
+[1535000] [SCOREBOARD-CHECK] PASS (ADD): x2 = 0x00000000
+[1605000] [OUTPUT MON] Reg Write: x8 <= 0x00000000
+[1605000] [SCOREBOARD-CHECK] PASS (SLLI): x8 = 0x00000000
+[1675000] [OUTPUT MON] Reg Write: x8 <= 0x00000000
+[1675000] [SCOREBOARD-CHECK] PASS (SLLI): x8 = 0x00000000
+[1755000] [OUTPUT MON] Reg Write: x25 <= 0x00000000
+[1755000] [SCOREBOARD-CHECK] PASS (SLLI): x25 = 0x00000000
+[1915000] [OUTPUT MON] Reg Write: x23 <= 0x00320000
+[1915000] [SCOREBOARD-CHECK] PASS (SLLI): x23 = 0x00320000
+[1975000] [OUTPUT MON] Reg Write: x14 <= 0x00000000
+[1975000] [SCOREBOARD-CHECK] PASS (LW): x14 = 0x00000000
+[2015000] [OUTPUT MON] Reg Write: x13 <= 0x0000005e
+[2015000] [SCOREBOARD-CHECK] PASS (ADD): x13 = 0x0000005e
+[2055000] [OUTPUT MON] Reg Write: x19 <= 0x0031ffec
+[2055000] [SCOREBOARD-CHECK] PASS (SUB): x19 = 0x0031ffec
+[2125000] [OUTPUT MON] Reg Write: x4 <= 0x00000000
+[2125000] [SCOREBOARD-CHECK] PASS (SLLI): x4 = 0x00000000
+[2185000] [OUTPUT MON] Reg Write: x10 <= 0x00000000
+[2185000] [SCOREBOARD-CHECK] PASS (LB): x10 = 0x00000000
+[2255000] [OUTPUT MON] Reg Write: x9 <= 0x00000000
+[2255000] [SCOREBOARD-CHECK] PASS (SLLI): x9 = 0x00000000
+[2305000] [OUTPUT MON] Reg Write: x15 <= 0x00000000
+[2305000] [SCOREBOARD-CHECK] PASS (SUB): x15 = 0x00000000
+[2335000] [OUTPUT MON] Reg Write: x15 <= 0xabcde000
+[2335000] [SCOREBOARD-CHECK] PASS (LUI): x15 = 0xabcde000
+[2365000] [OUTPUT MON] Reg Write: x16 <= 0x123450a4
+[2365000] [SCOREBOARD-CHECK] PASS (AUIPC): x16 = 0x123450a4
+[2405000] [OUTPUT MON] Reg Write: x5 <= 0x0000000a
+[2405000] [SCOREBOARD-CHECK] PASS (ADD): x5 = 0x0000000a
+[2445000] [OUTPUT MON] Reg Write: x23 <= 0x00000000
+[2445000] [SCOREBOARD-CHECK] PASS (AND): x23 = 0x00000000
+[2475000] [OUTPUT MON] Reg Write: x17 <= 0x000000f5
+[2475000] [SCOREBOARD-CHECK] PASS (XORI): x17 = 0x000000f5
+[2505000] [OUTPUT MON] Reg Write: x18 <= 0x0000000f
+[2505000] [SCOREBOARD-CHECK] PASS (ORI): x18 = 0x0000000f
+[2535000] [OUTPUT MON] Reg Write: x19 <= 0x00000010
+[2535000] [SCOREBOARD-CHECK] PASS (ANDI): x19 = 0x00000010
+[2585000] [OUTPUT MON] Reg Write: x20 <= 0x00000000
+[2585000] [SCOREBOARD-CHECK] PASS (SLLI): x20 = 0x00000000
+[2635000] [OUTPUT MON] Reg Write: x21 <= 0x00000005
+[2635000] [SCOREBOARD-CHECK] PASS (SRLI): x21 = 0x00000005
+[2835000] [OUTPUT MON] Reg Write: x22 <= 0x000000d4
+[2835000] [SCOREBOARD-CHECK] PASS (JAL): x22 = 0x000000d4
+[4370000] [OUTPUT MONITOR] Finished - Captured 49 register writes
+
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'tb_top_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 30us
+launch_simulation: Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 10617.336 ; gain = 0.000 ; free physical = 1076 ; free virtual = 13466
+run all
+
+
+╔═══════════════════════════════════════════════════════════╗
+║          CORRECTNESS CHECK SUMMARY                        ║
+╠═══════════════════════════════════════════════════════════╣
+║ PASS    : 49
+║ FAIL    : 0
+║ SKIPPED : 0  (unrecognized instruction, should be ~0)
+║ UNCHECKED (never observed): 0
+╚═══════════════════════════════════════════════════════════╝
+
+
+╔════════════════════════════════════════════════════════╗
+║            SIMULATION COMPLETE                         ║
+╚════════════════════════════════════════════════════════╝
+
+$finish called at time : 200370 ns : File "/home/chipra/functional_verif_core/functional_verif_core.srcs/sim_1/new/tb_top.sv" Line 130
