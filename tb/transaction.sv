@@ -20,10 +20,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-`timescale 1ns / 1ps
-
 class transaction;
-  // Instruction fields
+  // instruction fields
   rand bit [6:0]  opcode;
   rand bit [4:0]  rd;
   rand bit [4:0]  rs1;
@@ -32,20 +30,13 @@ class transaction;
   rand bit [6:0]  funct7;
   rand bit [31:0] imm;
   
-  // Encoded instruction
+  // encoded instruction
   bit [31:0] instruction;
   
   // For scoreboard checking
   bit [31:0] expected_result;
   bit [4:0]  expected_rd;
   
-  // Constrain to valid RV32I instructions only.
-  // NOTE: JAL (7'b1101111) is intentionally NOT in this randomizable set.
-  // Including it (with a bit-slice + inside{} range constraint on imm)
-  // caused a fatal XSim constraint-solver crash during simulation --
-  // a tooling limitation, not a logic error. JAL is instead added
-  // directly (bypassing randomize()) in generator.sv's directed-test
-  // phase, where its fields are set explicitly.
   constraint valid_opcode {
     opcode inside {
       7'b0110011,  // R-type (ADD, SUB, etc.)
@@ -60,12 +51,7 @@ class transaction;
   constraint valid_funct {
     if (opcode == 7'b0110011) {  // R-type
       funct3 inside {3'b000, 3'b100, 3'b110, 3'b111};
-      // The alt-funct7 bit (0100000) only distinguishes SUB from ADD when
-      // funct3==000. For XOR/OR/AND (funct3 100/110/111) there is no alt
-      // form in RV32I -- funct7 must be 0. Previously this let funct7
-      // range over {0,0x20} for ALL four funct3 values, which could
-      // generate a genuinely illegal opcode (e.g. funct3=100+funct7=0x20
-      // is not a defined instruction) and trip CATCH_ILLINSN.
+      
       if (funct3 == 3'b000)
         funct7 inside {7'b0000000, 7'b0100000};  // ADD or SUB
       else
@@ -76,33 +62,20 @@ class transaction;
       if (funct3 == 3'b001 || funct3 == 3'b101)
         funct7 == 7'b0000000;
     }
-    if (opcode == 7'b0000011) {  // Load
+      if (opcode == 7'b0000011) {  // load
       funct3 inside {3'b000, 3'b001, 3'b010, 3'b100, 3'b101};
     }
-    if (opcode == 7'b0100011) {  // Store
+        if (opcode == 7'b0100011) {  // store
       funct3 inside {3'b000, 3'b001, 3'b010};
     }
   }
   
   constraint valid_registers {
-    rd  inside {[1:31]};  // Don't write to x0
+    rd  inside {[1:31]};  // don't write to x0
     rs1 inside {[0:31]};
     rs2 inside {[0:31]};
   }
   
-  // NOTE on LOAD/STORE address range: the program itself occupies bytes
-  // 0-215 in the same unified memory (53 instructions + HALT). Earlier
-  // runs let load/store immediates range over [0:511] with no alignment
-  // requirement, which caused two real problems visible in simulation:
-  //   1. Random loads sometimes landed on an address holding an
-  //      instruction word, reading it back as "data" and mismatching
-  //      the golden model (which assumes fresh memory reads as 0).
-  //   2. CATCH_MISALIGN=1 means an unaligned LH/LW/SH/SW traps the CPU.
-  //      With trap left unconnected in tb_top, this silently halted
-  //      execution -- explaining why most of the 50 expected writes
-  //      never appeared.
-  // Fix: confine load/store addresses to [256:511] (well past the code
-  // footprint) and enforce natural alignment per access width.
   constraint reasonable_immediate {
     if (opcode == 7'b0000011) {     // LOAD instructions
       imm[11:0] inside {[256:511]};
@@ -123,9 +96,6 @@ class transaction;
     }
   }
   
-  //==========================================================================
-  // Encode instruction based on type
-  //==========================================================================
   function void encode_instruction();
     case(opcode)
       7'b0110011: begin  // R-type
@@ -148,7 +118,7 @@ class transaction;
         instruction = {imm[31:12], rd, opcode};
       end
       
-      7'b1101111: begin  // JAL - Special encoding! (set directly, not via randomize())
+      7'b1101111: begin  // JAL 
         // JAL immediate encoding (J-type):
         // inst[31]    = imm[20]
         // inst[30:21] = imm[10:1]
@@ -168,9 +138,6 @@ class transaction;
     endcase
   endfunction
   
-  //==========================================================================
-  // Get human-readable instruction name
-  //==========================================================================
   function string get_name();
     case(opcode)
       7'b0110011: begin  // R-type
