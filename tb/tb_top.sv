@@ -3,32 +3,30 @@
 // Module Name: tb_top
 //////////////////////////////////////////////////////////////////////////////////
 
-
 module tb_top;
   
-  // Clock generation
+  // clock generation
   bit clk;
   always #5 clk = ~clk;
   
-  // Interface instantiation
+  // interface instantiation
   intf i_intf(clk);
   
   // =========================================================================
   // MEMORY CONTROLLER - FIXED FOR INSTANT RESPONSE
   // =========================================================================
   
-  // Memory ready - responds instantly (combinational)
-  // Use always_comb because interface signals are 'logic' type
+  // memory ready - responds instantly (combinational)
   always_comb begin
     i_intf.mem_ready = i_intf.mem_valid;
   end
   
-  // Memory read - instant response (combinational)
+  // memory read - instant response (combinational)
   always_comb begin
     i_intf.mem_rdata = i_intf.memory[i_intf.mem_addr[13:2]];
   end
   
-  // Memory write - sequential (on clock edge)
+  // memory write - sequential (on clock edge)
   always @(posedge clk) begin
     if (i_intf.mem_valid && i_intf.mem_ready && |i_intf.mem_wstrb) begin
       if (i_intf.mem_wstrb[0]) i_intf.memory[i_intf.mem_addr[13:2]][7:0]   <= i_intf.mem_wdata[7:0];
@@ -66,62 +64,43 @@ module tb_top;
     .eoi()
   );
 
-  // Previously .trap() was left unconnected, so a misaligned-access or
-  // illegal-instruction trap halted the CPU with zero indication why --
-  // execution just went quiet. Now it's visible.
   always @(posedge i_intf.trap) begin
     $display("\n[%0t] *** CPU TRAP ASSERTED - execution halted (illegal instruction or misaligned access) ***\n", $time);
   end
   
-  // Connect internal signals for monitoring
+  // connect internal signals for monitoring
   assign i_intf.cpuregs_write = dut.cpuregs_write;
   assign i_intf.latched_rd = dut.latched_rd;
   assign i_intf.cpuregs_wrdata = dut.cpuregs_wrdata;
   
   // =========================================================================
-  // Test execution
+  // test execution
   // =========================================================================
 
   environment env;  // moved out of initial block for clarity / future reuse
 
   initial begin
-    // Initialize signals
+    // initialize signals
     i_intf.resetn = 0;
-    // Don't need to initialize mem_ready or mem_rdata - handled by always_comb
     
-    // Create environment
+    // create environment
     env = new(i_intf);
     
-    // Small delay for initialization
     #20;
     
-    // Run environment (loads all instructions, builds reference model,
-    // prints coverage, and forks the output monitor + correctness checker
-    // to run concurrently with DUT execution)
+    // run environment
     env.run();
     
-    // Environment setup is DONE - everything loaded, coverage printed,
-    // checker is forked and waiting on outmon2scb
     #100;
     
-    // NOW release reset - memory is already loaded, checker already forked!
     i_intf.resetn = 1;
     $display("\n╔════════════════════════════════════════════════════════╗");
     $display("║  *** RESET RELEASED - CPU STARTING EXECUTION! ***      ║");
     $display("╚════════════════════════════════════════════════════════╝\n");
     
-    // Let CPU execute -- output monitor + correctness checker are running
-    // concurrently in the background this whole window.
-    // Bumped 15000 -> 40000 -> 200000: the previous window only ever
-    // captured 16/50 checkable writes because the CPU was hitting a
-    // misaligned-access trap partway through (see interface.sv/tb_top.sv
-    // trap fix and transaction.sv address-alignment fix above) -- it
-    // wasn't actually a timing problem. With that fixed, this margin
-    // covers BARREL_SHIFTER(0)+TWO_STAGE_SHIFT(1)'s slow, cycles-per-bit
-    // SLLI/SRLI cost with room to spare.
     #200000;
 
-    // Print pass/fail/skip summary now that the execution window is done
+    // print pass/fail/skip summary now that the execution window is done
     env.print_final_summary();
     
     $display("\n╔════════════════════════════════════════════════════════╗");
@@ -130,7 +109,7 @@ module tb_top;
     $finish;
   end
   
-  // Waveform dump
+  // waveform dump
   initial begin
     $dumpfile("dump.vcd");
     $dumpvars(0, tb_top);
